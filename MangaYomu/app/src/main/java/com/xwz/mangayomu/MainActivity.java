@@ -1,7 +1,10 @@
 package com.xwz.mangayomu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +21,8 @@ import com.xwz.mangayomu.activity.ReaderActivity;
 import com.xwz.mangayomu.utils.FileUtils;
 
 import java.nio.file.Path;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startBtn.setOnClickListener(this);
         setSrcBtn.setOnClickListener(this);
+
+        myRequirePermission();
+    }
+
+    private void myRequirePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }else {
+            Toast.makeText(this,"您已经申请了权限!",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -60,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case FILE_REQUIRE_CODE:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    String path = FileUtils.getRealFilePath(this, uri);
+                    String path = uri.getPath();
                     srcUrlText.setText(path != null ? path : "null");
                 }
                 break;
@@ -69,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onSettingClick(View view){
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");//无类型限制
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, FILE_REQUIRE_CODE);
