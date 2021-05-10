@@ -12,7 +12,7 @@
             android:id="@+id/startBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="进入"
+            android:text="@string/enter"
             android:layout_centerInParent="true"/>
         <Button
             android:id="@+id/setSrcBtn"
@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/startBtn"
             android:layout_centerHorizontal="true"
-            android:text="设置" />
+            android:text="@string/setting" />
         <TextView
             android:id="@+id/srcUrlText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/setSrcBtn"
             android:layout_centerHorizontal="true"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:text="asdf" />
     </RelativeLayout>
 

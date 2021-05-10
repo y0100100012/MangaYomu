@@ -4,14 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/mainPic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:contentDescription="mainPic" />
-    </FrameLayout>
+            android:contentDescription="@string/mainpic" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/leftShift"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/page_left"
+            android:textColor="#00000000"
+            android:background="#00000000"
+            style="?android:attr/buttonBarButtonStyle">
+        </Button>
+        <Button
+            android:id="@+id/rightShift"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/page_right"
+            android:textColor="#00000000"
+            android:background="#00000000"
+            style="?android:attr/buttonBarButtonStyle">
+        </Button>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+            <Button
+                android:id="@+id/returnBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/page_left"
+                android:textColor="#00000000"
+                android:background="#00000000"
+                style="?android:attr/buttonBarButtonStyle">
+            </Button>
+            <Button
+                android:id="@+id/turnPicBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/page_right"
+                android:textColor="#00000000"
+                android:background="#00000000"
+                style="?android:attr/buttonBarButtonStyle">
+            </Button>
+        </LinearLayout>
+        <Button
+            android:id="@+id/centerBtn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:background="#00000000"
+            android:text="@string/page_right"
+            android:textColor="#00000000" />
+        <SeekBar
+            android:id="@+id/pageControlBar"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:thumb="@drawable/seek_style"
+            android:min="1"
+            android:max="1"
+            android:layout_above="@+id/pageText"/>
+        <TextView
+            android:id="@+id/pageText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:textSize="30sp"
+            android:gravity="center">
+        </TextView>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MangaYomu</string>
+    <string name="cover_picture">cover_picture</string>
+    <string name="mainpic">mainPic</string>
+    <string name="page_left">左翻页</string>
+    <string name="page_right">右翻页</string>
+    <string name="setting">设置</string>
+    <string name="enter">进入</string>
+    <string name="example_text">示例文字xxxxx</string>
 </resources>

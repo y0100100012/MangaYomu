@@ -1,4 +1,4 @@
-package com.xwz.mangayomu.model;
+package com.xwz.mangayomu.entity;
 
 public class FolderInfo {
     private Integer folderIcon;//文件图标

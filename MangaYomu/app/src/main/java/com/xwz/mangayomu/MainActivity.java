@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xwz.mangayomu.activity.BookListActivity;
 import com.xwz.mangayomu.activity.ReaderActivity;
 import com.xwz.mangayomu.utils.FileUtils;
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onStartClick(View view){
-        startActivity(new Intent(MainActivity.this, ReaderActivity.class));
+        startActivity(new Intent(MainActivity.this, BookListActivity.class));
     }
 
     @Override
