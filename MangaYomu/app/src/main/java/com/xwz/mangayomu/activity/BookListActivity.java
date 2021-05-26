@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.xwz.mangayomu.R;
@@ -39,7 +40,7 @@ public class BookListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        findAllBook(Environment.getExternalStorageDirectory() + "/Download");
+        findAllBook(Environment.getExternalStorageDirectory() + "/Manga");
     }
 
     private void findAllBook(String rootPath) {

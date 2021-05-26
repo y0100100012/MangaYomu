@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.widget.Toast;
 
 public class FileUtils {
     public static String getPath(Context context, Uri uri) {
@@ -18,7 +17,9 @@ public class FileUtils {
                 cursor = context.getContentResolver().query(uri, projection,null, null, null);
                 int column_index = cursor.getColumnIndexOrThrow("_data");
                 if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
+                    String resultStr = cursor.getString(column_index);
+                    cursor.close();
+                    return resultStr;
                 }
             } catch (Exception e) {
                 // Eat it

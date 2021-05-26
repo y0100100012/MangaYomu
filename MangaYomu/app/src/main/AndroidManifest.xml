@@ -18,10 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ReaderActivity">
+
+        <activity android:name=".activity.BookListActivity" android:parentActivityName=".MainActivity">
 
         </activity>
-        <activity android:name=".activity.BookListActivity">
+        <activity android:name=".activity.ReaderActivity" android:parentActivityName=".activity.BookListActivity">
 
         </activity>
     </application>

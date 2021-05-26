@@ -1,36 +1,24 @@
 package com.xwz.mangayomu;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xwz.mangayomu.activity.BookListActivity;
-import com.xwz.mangayomu.activity.ReaderActivity;
-import com.xwz.mangayomu.utils.FileUtils;
+import com.xwz.mangayomu.utils.ProperUtil;
 
-import java.nio.file.Path;
-
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final int FILE_REQUIRE_CODE = 1;
+    private final int READ_REQUEST_CODE = 1;
 
-    private Button startBtn;
-    private Button setSrcBtn;
     private TextView srcUrlText;
 
     @Override
@@ -39,20 +27,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         srcUrlText = findViewById(R.id.srcUrlText);
-        setSrcBtn = findViewById(R.id.setSrcBtn);
-        startBtn = findViewById(R.id.startBtn);
+        Button setSrcBtn = findViewById(R.id.setSrcBtn);
+        Button startBtn = findViewById(R.id.startBtn);
 
         startBtn.setOnClickListener(this);
         setSrcBtn.setOnClickListener(this);
 
-        myRequirePermission();
+        loadProps();
     }
 
-    private void myRequirePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }else {
-            Toast.makeText(this,"您已经申请了权限!",Toast.LENGTH_SHORT).show();
+    private void loadProps(){
+        try {
+            String mangaUri = ProperUtil.getProps(getApplicationContext(), "mangaUri");
+            srcUrlText.setText(mangaUri);
+            Toast.makeText(getApplicationContext(), "配置："+mangaUri, Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -60,34 +50,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.startBtn) {
-            onStartClick(view);
+            onStartClick();
         } else if (id == R.id.setSrcBtn) {
-            onSettingClick(view);
+            onSettingClick();
         }
     }
 
-    private void onStartClick(View view){
+    private void onStartClick(){
         startActivity(new Intent(MainActivity.this, BookListActivity.class));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)  {
-        switch (requestCode) {
-            case FILE_REQUIRE_CODE:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    String path = uri.getPath();
-                    srcUrlText.setText(path != null ? path : "null");
+        if (requestCode == READ_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                String path = uri.getPath();
+                try {
+                    ProperUtil.setProps(getApplicationContext(), "mangaUri", path != null ? path : "");
+                    loadProps();
+                } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), "读写配置文件失败", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
                 }
-                break;
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void onSettingClick(View view){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");//无类型限制
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, FILE_REQUIRE_CODE);
+    private void onSettingClick(){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 }
