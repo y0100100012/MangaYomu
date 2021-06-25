@@ -10,12 +10,14 @@ import static org.junit.Assert.*;
 public class MainUnitTest {
     @Test
     public void addition_isCorrect() {
-        String str = "p1.jpg";
-//        String str2=str.replaceAll(".*[^\\d](?=(\\d+))","");
+        String str = "/0/Ma/C_1112_005.jpg";
 
 
-        Pattern pattern = Pattern.compile("(\\d+)(?=.)");
+        Pattern pattern = Pattern.compile("\\d+((?=\\.))");
         Matcher matcher = pattern.matcher(str);
+        if (matcher.find()) {
+            System.out.println(matcher.group(0));
+        }
         if (matcher.find()) {
             System.out.println(matcher.group(0));
         }

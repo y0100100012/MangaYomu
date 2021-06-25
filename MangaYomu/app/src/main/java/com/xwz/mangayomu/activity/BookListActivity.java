@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class BookListActivity extends AppCompatActivity {
     private final List<BookInfo> bookInfoList = new ArrayList<>();
-    private final Pattern pattern = Pattern.compile("(\\d+)(?=.)");
+    private final Pattern pattern = Pattern.compile("\\d+((?=\\.))");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
